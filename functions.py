@@ -18,7 +18,7 @@ def _respond(client):
     if "name" in client:
         speak_name()
 
-    if "weight converter" in client:
+    if "weight" in client and "converter" in client:
         speak_weight_converter()
 
 
@@ -131,36 +131,36 @@ functions_string = {
     "alarm_functions": "alarm",
     "music_functions": "music",
     "name_function": "name",
-    "time_function": "what time is it",
+    "time_function": "whattimeisit",
     "weather_function": "weather",
     "calculator_function": "calculator",
     "compliment_function": "compliment",
-    "mood_function": "i am not in a mood",
-    "feelings_function": "i am feeling depressed",
+    "mood_function": "notinamood",
+    "feelings_function": "feelingdepressed",
     "browse_function": "browse",
-    "location_function": "find location",
+    "location_function": "location",
     "temperature_function": "temperature",
     "humidity_function": "humidity",
     "cool_function": "cool",
     "dang_function": "dang",
-    "marry_function": "will you marry me",
-    "love_function": "i love you",
-    "greeting_function": "good morning",
-    "smart_function": "you are smart",
-    "goodnight_function": "good night",
-    "relaxmusic_function": "relaxing music",
-    "coin_function": "flip a coin",
-    "dice_function": "roll a dice",
+    "marry_function": "marryme",
+    "love_function": "loveyou",
+    "greeting_function": "goodmorning",
+    "smart_function": "smart",
+    "goodnight_function": "goodnight",
+    "relaxmusic_function": "relaxingmusic",
+    "coin_function": "flipacoin",
+    "dice_function": "rolladice",
     "video_function": "video",
     "youtube_function": "youtube",
     "chess_function": "chess",
-    "cubetrainer_function": "cube trainer",
-    "cubetutorial_function": "cube tutorial",
-    "googlehangouts_function": "google hangouts",
-    "cubetimer_function": "cube timer",
+    "cubetrainer_function": "cubetrainer",
+    "cubetutorial_function": "cubetutorial",
+    "googlehangouts_function": "hangouts",
+    "cubetimer_function": "cubetimer",
     "games_function": "games",
-    "weight_converter_function":"weight converter",
-    "thankyou_function": "thank you",
+    "weight_converter_function":"weightconverter",
+    "thankyou_function": "thankyou",
     "exit_function": "exit",
 }
 
@@ -189,14 +189,14 @@ def speak_weight_converter():
 
     unit = input('Is the weight in (L)lbs (K)kg: ')
 
-    if unit.upper() == 'L':
+    if unit.upper() == 'K':
         final1 = (.45) * int(weight)
         print(f'The weight is {final1} kilos ')
 
     else:
         final1 = (.45) / int(weight)
         print(f'The weight is {final1} pounds ')
-
+    speak_anythingelse()
 
 
 def alarm():
@@ -217,7 +217,7 @@ def speak_time():
 
 def did_you_mean(input_string):
     input_list = remove_more_less(functions_string, input_string)
-    jarvis_speak("Sorry I did not catch that. ")
+    jarvis_speak("Sorry, I did not get that. ")
     sixty = round((len(input_string) * 0.6))
     input_list_string = list(input_string)
     for i in range(0, len(input_list) - 1):
@@ -240,6 +240,8 @@ def did_you_mean(input_string):
                     jarvis_speak("What do you want me to do then? ")
                 break
     jarvis_speak("please type that again. ")
+    input500 = input()
+    return input500
 
 
 def remove_more_less(input_dictionary, input_string):
@@ -276,6 +278,7 @@ def stopwatch():
             end_time = time.time()
             print("The time elapsed is", round(end_time - start_time, 2), "secs")
             break
+    speak_anythingelse()
 
 
 def convert_alarm_time(given_alarm_time):
@@ -318,7 +321,7 @@ def speak_anythingelse():
     jarvis_speak("Is there anything else you want me to do. ")
     answer = input()
     if "no" in answer:
-        jarvis_speak("Ok no problem, you can ask me anything later. ")
+        jarvis_speak("You can ask me anything later. ")
         exit()
     elif "yes" in answer:
         jarvis_speak("What can I do for you. ")
