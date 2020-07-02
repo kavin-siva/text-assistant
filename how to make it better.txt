@@ -5,5 +5,3 @@
 # change the jarvis to a catchy name
 # when ' is there anything else i can help u with' if ya or nothing in txt it giving error.only if typed something in function/command the it is responding.
 # alarm is not working
-#error in dictionary
-
