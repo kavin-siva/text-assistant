@@ -16,7 +16,7 @@ def alarm():
             print('The Alarm has ended. ')
             break
 
-    while n<=15:
-        playsound.playsound('alarm_music.mp3')
-        time.sleep(2)
+
+    playsound.playsound('alarm_music.mp3')
+    input0 = input
 alarm()
