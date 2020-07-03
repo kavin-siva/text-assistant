@@ -33,7 +33,7 @@ def _respond(client):
     if "name" in client:
         speak_name()
 
-    if "weight" in client and "converter" in client:
+    if "weight" in client and "con" in client:
         speak_weight_converter()
 
     elif "stopwatch" in client:
@@ -126,6 +126,9 @@ def _respond(client):
     elif "hangouts" in client:
         speak_googlehangouts()
 
+    elif 'mail' in client:
+        speak_mail()
+
     elif "game" in client:
         speak_games()
 
@@ -146,6 +149,7 @@ functions_string = {
     "music_functions": "music",
     "name_function": "name",
     "time_function": "time",
+    "mail_function": "mail",
     "weather_function": "weather",
     "calculator_function": "calculator",
     "compliment_function": "compliment",
@@ -173,7 +177,7 @@ functions_string = {
     "googlehangouts_function": "hangouts",
     "cubetimer_function": "cubetimer",
     "games_function": "games",
-    "weight_converter_function": "weightconverter",
+    "weight_converter_function": "weightcon",
     "thankyou_function": "thankyou",
     "exit_function": "exit",
 }
@@ -225,6 +229,36 @@ def wishMe():
 
 #         return "None"
 #     return query
+
+
+def speak_mail():
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login('kavinsivasu@gmail.com', 'Jupiter9')
+    speak("Who do you want to send the email to?")
+    client = input()
+    try:
+        if 'garvit' in client:
+            speak("What should I say?")
+            content = input()
+            to = "sharmagarvit614@gmail.com"
+
+            speak("Email has been sent!")
+
+        elif 'mukil' in client:
+            speak("What should I say?")
+            content = input()
+            to = "mukil2win@gmail.com"
+
+            speak("Email has been sent!")
+    except Exception as e:
+        print(e)
+        speak("Sorry Sir. I am not able to send this email")
+    server.sendmail('kavinsivasu@gmail.com', to, content)
+
+    server.close()
 
 
 def speak_dictionary():
