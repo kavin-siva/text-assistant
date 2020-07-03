@@ -1,4 +1,8 @@
 from time import ctime
+import pyttsx3
+import wikipedia
+import smtplib
+import datetime
 import time
 from PyDictionary import PyDictionary
 import speech_recognition as sr
@@ -8,6 +12,17 @@ import os
 import random
 from gtts import gTTS
 import subprocess
+
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+# print(voices[1].id)
+engine.setProperty('voice', voices[0].id)
+
+
+def speak(audio):
+    print(audio)
+    engine.say(audio)
+    engine.runAndWait()
 
 
 def _respond(client):
@@ -20,7 +35,6 @@ def _respond(client):
 
     if "weight" in client and "converter" in client:
         speak_weight_converter()
-
 
     elif "stopwatch" in client:
         stopwatch()
@@ -131,7 +145,7 @@ functions_string = {
     "alarm_functions": "alarm",
     "music_functions": "music",
     "name_function": "name",
-    "time_function": "whattimeisit",
+    "time_function": "time",
     "weather_function": "weather",
     "calculator_function": "calculator",
     "compliment_function": "compliment",
@@ -159,7 +173,7 @@ functions_string = {
     "googlehangouts_function": "hangouts",
     "cubetimer_function": "cubetimer",
     "games_function": "games",
-    "weight_converter_function":"weightconverter",
+    "weight_converter_function": "weightconverter",
     "thankyou_function": "thankyou",
     "exit_function": "exit",
 }
@@ -169,29 +183,64 @@ r = sr.Recognizer()
 dictionary = PyDictionary()
 
 
-def jarvis_speak(audio_string):
-    tts = gTTS(text=audio_string, lang="en")
-    r = random.randint(1, 10000000)
-    audio_file = "audio-" + str(r) + ".mp3"
-    tts.save(audio_file)
-    playsound.playsound(audio_file)
-    print(audio_string)
-    os.remove(audio_file)
+# def jarvis_speak(audio_string):
+#     tts = gTTS(text=audio_string, lang="en")
+#     r = random.randint(1, 10000000)
+#     audio_file = "audio-" + str(r) + ".mp3"
+#     tts.save(audio_file)
+#     playsound.playsound(audio_file)
+#     print(audio_string)
+#     os.remove(audio_file)
+
+def wishMe():
+    hour = int(datetime.datetime.now().hour)
+    if hour >= 0 and hour < 12:
+        speak("Good Morning!")
+
+    elif hour >= 12 and hour < 18:
+        speak("Good Afternoon!")
+
+    else:
+        speak("Good Evening!")
+
+    speak("Hi Kavin, how can I help you")
+
+
+# def takeCommand():
+#     # It takes microphone input from the user and returns string output
+
+#     r = sr.Recognizer()
+#     with sr.Microphone() as source:
+
+#         r.pause_threshold = 1
+#         audio = r.listen(source)
+
+#     try:
+
+#         query = r.recognize_google(audio, language='en')
+#         print(f"User said: {query}\n")
+
+#     except Exception as e:
+#         # print(e)
+
+#         return "None"
+#     return query
 
 
 def speak_dictionary():
     word = input("which word would you like me to define ")
-    jarvis_speak(str(dictionary.meaning(word)))
+    speak(str(dictionary.meaning(word)))
     speak_anythingelse()
+
 
 def speak_weight_converter():
     weight = input('Weight: ')
 
     unit = input('Is the weight in (L)lbs (K)kg: ')
 
-    if unit.upper() == 'K':
+    if unit.upper() == 'L':
         final1 = (.45) * int(weight)
-        print(f'The weight is {final1} kilos ')
+        print(f'The weight is {final1} Kilos ')
 
     else:
         final1 = (.45) / int(weight)
@@ -207,17 +256,17 @@ def speak_location():
     location = str(input("What location would you like to look for? "))
     url = f"https://google.nl/maps/place/{location}/&amp;"
     webbrowser.get().open(url)
-    jarvis_speak("Here is what I found for " + location)
+    speak("Here is what I found for " + location)
     speak_anythingelse()
 
 
 def speak_time():
-    jarvis_speak(str(ctime()))
+    speak(str(ctime()))
 
 
 def did_you_mean(input_string):
     input_list = remove_more_less(functions_string, input_string)
-    jarvis_speak("Sorry, I did not get that. ")
+    speak("Sorry, I did not get that. ")
     sixty = round((len(input_string) * 0.6))
     input_list_string = list(input_string)
     for i in range(0, len(input_list) - 1):
@@ -229,7 +278,7 @@ def did_you_mean(input_string):
             except IndexError:
                 continue
             if n >= sixty:
-                jarvis_speak(f"Did you mean {input_list[i]}")
+                speak(f"Did you mean {input_list[i]}")
                 new_input = input()
                 new_input = new_input.lower()
                 if "y" in new_input:
@@ -237,9 +286,9 @@ def did_you_mean(input_string):
                     n = 0
                     _respond(input_list[i])
                 else:
-                    jarvis_speak("What do you want me to do then? ")
+                    speak("What do you want me to do then? ")
                 break
-    jarvis_speak("please type that again. ")
+    speak("please type that again. ")
     input500 = input()
     return input500
 
@@ -276,7 +325,8 @@ def stopwatch():
         except KeyboardInterrupt:
             print("Timer has stopped")
             end_time = time.time()
-            print("The time elapsed is", round(end_time - start_time, 2), "secs")
+            print("The time elapsed is", round(
+                end_time - start_time, 2), "secs")
             break
     speak_anythingelse()
 
@@ -318,20 +368,20 @@ def convert_alarm_time(given_alarm_time):
 
 
 def speak_anythingelse():
-    jarvis_speak("Is there anything else you want me to do. ")
+    speak("Is there anything else you want me to do. ")
     answer = input()
     if "no" in answer:
-        jarvis_speak("You can ask me anything later. ")
+        speak("You can ask me anything later. ")
         exit()
     elif "yes" in answer:
-        jarvis_speak("What can I do for you. ")
+        speak("What can I do for you. ")
         _respond(input())
     else:
         _respond(answer)
 
 
 def speak_calculator():
-    jarvis_speak("What do you want to calculate ")
+    speak("What do you want to calculate ")
     equation = input()
     for i in range(0, len(equation) - 1):
         if (
@@ -342,16 +392,16 @@ def speak_calculator():
         ):
             operator = equation[i]
             term1 = int(equation[0:i])
-            term2 = int(equation[i + 1 :])
+            term2 = int(equation[i + 1:])
 
     if operator == "+":
-        jarvis_speak(str(term1 + term2))
+        speak(str(term1 + term2))
     elif operator == "-":
-        jarvis_speak(str(term1 - term2))
+        speak(str(term1 - term2))
     elif operator == "*":
-        jarvis_speak(str(term1 * term2))
+        speak(str(term1 * term2))
     else:
-        jarvis_speak(str(term1 / term2))
+        speak(str(term1 / term2))
     speak_anythingelse()
 
 
@@ -361,17 +411,17 @@ def speak_weather():
     owm = OWM("579ed7bb39f3bf7816212b6fadd195d3")
     mgr = owm.weather_manager()
     weather = mgr.weather_at_place("Chennai").weather
-    jarvis_speak("The humidity percentage is " + str(weather.humidity))
-    jarvis_speak(
+    speak("The humidity percentage is " + str(weather.humidity))
+    speak(
         "The temperature in fahrenheit is "
         + str(round(1.8 * (weather.temp["temp"] - 273) + 32))
     )
-    jarvis_speak("The weather status is " + str(weather.to_dict()["detailed_status"]))
+    speak("The weather status is " + str(weather.to_dict()["detailed_status"]))
     speak_anythingelse()
 
 
 def speak_games():
-    jarvis_speak("What game do you want to play")
+    speak("What game do you want to play")
     input1 = input("A game on the web or guess the number.")
     if "number" in input1:
         number = random.randrange(1, 50)
@@ -397,37 +447,37 @@ def speak_games():
 
 
 def speak_name():
-    jarvis_speak("My name is Jarvis. ")
+    speak("My name is Jarvis. ")
     speak_anythingelse()
 
 
 def speak_chess():
     url = "www.chess.com"
     webbrowser.get().open(url)
-    jarvis_speak("I hope you win your chess match ")
+    speak("I hope you win your chess match ")
 
 
 def speak_compliment():
-    jarvis_speak(
+    speak(
         "I admire you. You can do it. I value you. You can count on me. I believe in you. You are kind. I trust you. You are smart. "
     )
     speak_anythingelse()
 
 
 def speak_mood():
-    jarvis_speak("well seeing you in this mood makes me sad ")
-    jarvis_speak("I think you had a tough day")
-    jarvis_speak("lets relax ")
+    speak("well seeing you in this mood makes me sad ")
+    speak("I think you had a tough day")
+    speak("lets relax ")
     url = "www.youtube.com"
     webbrowser.get().open(url)
     speak_anythingelse()
 
 
 def speak_feelings():
-    jarvis_speak(
+    speak(
         "I admire you. You can do it. I value you. You can count on me. I believe in you. You are kind. I trust you. You are smart. "
     )
-    jarvis_speak("how about we relax")
+    speak("how about we relax")
     url = "www.youtube.com"
     webbrowser.get().open(url)
     speak_anythingelse()
@@ -438,22 +488,22 @@ def speak_browse():
     find = find.replace(" ", "+")
     url = f"https://google.com/search?q={find}"
     webbrowser.get().open(url)
-    jarvis_speak("Here is what I found for " + find)
+    speak("Here is what I found for " + find)
     speak_anythingelse()
 
 
 def speak_greetings():
-    jarvis_speak("Good Morning to you to")
-    jarvis_speak("It is ")
-    jarvis_speak(ctime())
-    jarvis_speak("You better get going now, as today is a big day. ")
+    speak("Good Morning to you to")
+    speak("It is ")
+    speak(ctime())
+    speak("You better get going now, as today is a big day. ")
     speak_anythingelse()
 
 
 def speak_goodnight():
-    jarvis_speak("Good Night to you as well")
-    jarvis_speak("Sleep tite and do not let the bed bugs bite. ")
-    jarvis_speak(ctime())
+    speak("Good Night to you as well")
+    speak("Sleep tite and do not let the bed bugs bite. ")
+    speak(ctime())
     # add alarm after 8 hours with clients permission
 
 
@@ -464,14 +514,14 @@ def speak_cubetutorial():
     cubetutorial = cubetutorial.replace(" ", "+")
     url = f"https://www.youtube.com/results?search_query={cubetutorial}"
     webbrowser.get().open(url)
-    jarvis_speak("I hope you learn something new in cubing ")
+    speak("I hope you learn something new in cubing ")
     speak_anythingelse()
 
 
 def speak_relaxmusic():
     url = "https://www.youtube.com/watch?v=B1T06UhcX0Q"
     webbrowser.get().open(url)
-    jarvis_speak(" well this is my all time favorite . ")
+    speak(" well this is my all time favorite . ")
     speak_anythingelse()
 
 
@@ -481,7 +531,7 @@ def speak_temperature():
     owm = OWM("579ed7bb39f3bf7816212b6fadd195d3")
     mgr = owm.weather_manager()
     weather = mgr.weather_at_place("Chennai").weather
-    jarvis_speak(
+    speak(
         "The temperature in fahrenheit is "
         + str(round(1.8 * (weather.temp["temp"] - 273) + 32))
     )
@@ -494,41 +544,41 @@ def speak_humidity():
     owm = OWM("579ed7bb39f3bf7816212b6fadd195d3")
     mgr = owm.weather_manager()
     weather = mgr.weather_at_place("Chennai").weather
-    jarvis_speak("The humidity percentage is " + str(weather.humidity))
+    speak("The humidity percentage is " + str(weather.humidity))
     speak_anythingelse()
 
 
 def speak_cool():
-    jarvis_speak("Thank you for that heart melting compliment. ")
+    speak("Thank you for that heart melting compliment. ")
     speak_anythingelse()
 
 
 def speak_dang():
-    jarvis_speak("Nothing that much. ")
+    speak("Nothing that much. ")
     speak_anythingelse()
 
 
 def speak_love():
-    jarvis_speak("Awwwww, that was the sweetest thing I ever heard. ")
-    jarvis_speak("I love you too ")
+    speak("Awwwww, that was the sweetest thing I ever heard. ")
+    speak("I love you too ")
     speak_anythingelse()
 
 
 def speak_marry():
-    jarvis_speak(
+    speak(
         "I would like to marry you too, but unfortunately I live in the clouds. "
     )
-    jarvis_speak("Now you just made me feel like a model. ")
+    speak("Now you just made me feel like a model. ")
     speak_anythingelse()
 
 
 def speak_smart():
-    jarvis_speak("Nothing that much, anything for you. ")
+    speak("Nothing that much, anything for you. ")
     speak_anythingelse()
 
 
 def speak_music():
-    jarvis_speak("ok, let me open wynk music for you. ")
+    speak("ok, let me open wynk music for you. ")
     url = "https://wynk.in"
     webbrowser.get().open(url)
     speak_anythingelse()
@@ -537,17 +587,17 @@ def speak_music():
 def speak_dice():
     dice = random.randint(1, 6)
     if dice == 1:
-        jarvis_speak("It rolled on number one. ")
+        speak("It rolled on number one. ")
     if dice == 2:
-        jarvis_speak("It rolled on number two. ")
+        speak("It rolled on number two. ")
     if dice == 3:
-        jarvis_speak("It rolled on number three. ")
+        speak("It rolled on number three. ")
     if dice == 4:
-        jarvis_speak("It rolled on number four. ")
+        speak("It rolled on number four. ")
     if dice == 5:
-        jarvis_speak("It rolled on number five. ")
+        speak("It rolled on number five. ")
     if dice == 6:
-        jarvis_speak("It rolled on number six. ")
+        speak("It rolled on number six. ")
         speak_anythingelse()
 
     speak_anythingelse()
@@ -557,10 +607,10 @@ def speak_coin():
     # playsound('Toss.mp3')
     coin = random.randint(1, 2)
     if coin == 1:
-        jarvis_speak("It landed on heads")
+        speak("It landed on heads")
         speak_anythingelse()
     else:
-        jarvis_speak("It landed on tails")
+        speak("It landed on tails")
         speak_anythingelse()
 
 
@@ -569,7 +619,7 @@ def speak_video():
     search = search.replace(" ", "+")
     url = f"https://www.youtube.com/results?search_query={search}"
     webbrowser.get().open(url)
-    jarvis_speak("Here is what I found for " + search)
+    speak("Here is what I found for " + search)
     speak_anythingelse()
 
 
@@ -578,33 +628,33 @@ def speak_youtube():
     search = search.replace(" ", "+")
     url = f"https://www.youtube.com/results?search_query={search}"
     webbrowser.get().open(url)
-    jarvis_speak("Here is what I found for " + search)
+    speak("Here is what I found for " + search)
     speak_anythingelse()
 
 
 def speak_cubetrainer():
     url = "https://jperm.net"
     webbrowser.get().open(url)
-    jarvis_speak("This is what I found for cube trainer. ")
+    speak("This is what I found for cube trainer. ")
     speak_anythingelse()
 
 
 def speak_googlehangouts():
     url = "https://hangouts.google.com/?authuser=1"
     webbrowser.get().open(url)
-    jarvis_speak("Here is what I found for hangouts. ")
+    speak("Here is what I found for hangouts. ")
     speak_anythingelse()
 
 
 def speak_cubetimer():
     url = "www.cstimer.net/timer.php"
     webbrowser.get().open(url)
-    jarvis_speak("I hope you get a new PB. ")
+    speak("I hope you get a new PB. ")
     speak_anythingelse()
 
 
 def speak_thankyou():
-    jarvis_speak("Nothing that much, I am just working because you make my day. ")
+    speak("Nothing that much, I am just working because you make my day. ")
     speak_anythingelse()
 
 
@@ -612,4 +662,3 @@ def speak_exit():
     print("processing exit... ")
     time.sleep(2)
     exit()
-

@@ -20,15 +20,8 @@ def authenticate_user():
             return True
 
 
-fn.jarvis_speak("My name is Jarvis ")
-fn.jarvis_speak("Hi, Kavin, Is there anything I can do for you. ")
-
-
-
-
-
 if __name__ == "__main__":
+    fn.wishMe()
     while True:
         client = input()
         fn._respond(client)
-
