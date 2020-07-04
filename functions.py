@@ -127,6 +127,9 @@ def _respond(client):
     elif "hangouts" in client:
         speak_googlehangouts()
 
+    elif "shopping" in client or "list" in client:
+        speak_list()
+
     elif 'mail' in client:
         speak_mail()
 
@@ -181,6 +184,7 @@ functions_string = {
     "video_function": "video",
     "youtube_function": "youtube",
     "chess_function": "chess",
+    "list_function": "list",
     "cubetrainer_function": "cubetrainer",
     "cubetutorial_function": "cubetutorial",
     "googlehangouts_function": "hangouts",
@@ -233,25 +237,30 @@ def speak_wikipedia(client):
     speak_anythingelse()
 
 
-# def takeCommand():
-#     # It takes microphone input from the user and returns string output
+def speak_list():
+    if os._exists("shopping_list.txt"):
+    speak("what do you want to add in your list ")
+    while True:
 
-#     r = sr.Recognizer()
-#     with sr.Microphone() as source:
+        # def takeCommand():
+        #     # It takes microphone input from the user and returns string output
 
-#         r.pause_threshold = 1
-#         audio = r.listen(source)
+        #     r = sr.Recognizer()
+        #     with sr.Microphone() as source:
 
-#     try:
+        #         r.pause_threshold = 1
+        #         audio = r.listen(source)
 
-#         query = r.recognize_google(audio, language='en')
-#         print(f"User said: {query}\n")
+        #     try:
 
-#     except Exception as e:
-#         # print(e)
+        #         query = r.recognize_google(audio, language='en')
+        #         print(f"User said: {query}\n")
 
-#         return "None"
-#     return query
+        #     except Exception as e:
+        #         # print(e)
+
+        #         return "None"
+        #     return query
 
 
 def speak_mail():
@@ -319,12 +328,26 @@ def speak_location():
 
 
 def speak_time():
-    speak(time.localtime().tm_wday + 1)
-    speak(time.localtime().tm_mon)
-    speak(time.localtime().tm_mday)
-    speak(time.localtime().tm_hour)
-    speak(time.localtime().tm_min)
-    speak(time.localtime().tm_year)
+    list1 = ["Monday", "Tuesday", "Wednesday",
+             "Thursday", "Friday", "Saturday", "Sunday"]
+    wday = list1[time.localtime().tm_wday]
+    list2 = ["January", "February", "March", "April", "May", "June",
+             "July", "August", "September", "October", "November", "December"]
+    mon = list2[time.localtime().tm_mon - 1]
+    mday = time.localtime().tm_mday
+    hour = time.localtime().tm_hour
+    minu = time.localtime().tm_min
+    if hour > 12:
+        hour -= 12
+        minu = f"{minu} PM"
+    elif hour == 12:
+        minu = f"{minu} PM"
+    else:
+        minu = f"{minu} AM"
+
+    year = time.localtime().tm_year
+    string = f"{wday} {mon} {mday} {hour}:{minu} {year}"
+    speak(string)
     speak_anythingelse()
 
 
