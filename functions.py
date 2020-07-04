@@ -27,6 +27,7 @@ def speak(audio):
 
 def _respond(client):
 
+    extra_client = client
     client = client.replace(" ", "")
     client = client.lower()
 
@@ -137,6 +138,14 @@ def _respond(client):
 
     elif "thankyou" in client:
         speak_thankyou()
+    elif "" in client:
+        try:
+            speak_wikipedia(extra_client)
+
+        except:
+
+            client = did_you_mean(client)
+            _respond(client)
 
     else:
         client = did_you_mean(client)
@@ -210,6 +219,15 @@ def wishMe():
     speak("Hi Kavin, how can I help you")
 
 
+def speak_wikipedia(client):
+    client = client.split(' ')
+    client = " ".join(client[2:])
+    wikipedia_input = str(wikipedia.summary(client, sentences=3))
+    speak('According to wikipedia ')
+    speak(wikipedia_input)
+    speak_anythingelse()
+
+
 # def takeCommand():
 #     # It takes microphone input from the user and returns string output
 
@@ -259,6 +277,7 @@ def speak_mail():
     server.sendmail('kavinsivasu@gmail.com', to, content)
 
     server.close()
+    speak_anythingelse()
 
 
 def speak_dictionary():
@@ -296,6 +315,7 @@ def speak_location():
 
 def speak_time():
     speak(str(ctime()))
+    speak_anythingelse()
 
 
 def did_you_mean(input_string):
@@ -404,7 +424,7 @@ def convert_alarm_time(given_alarm_time):
 def speak_anythingelse():
     speak("Is there anything else you want me to do. ")
     answer = input()
-    if "no" in answer:
+    if "n" in answer:
         speak("You can ask me anything later. ")
         exit()
     elif "yes" in answer:

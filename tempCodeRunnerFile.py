@@ -1,0 +1,1 @@
+speak('According to wikipedia ')

@@ -3,4 +3,5 @@
 # organize the code like cubing, etc.
 # when good night then make jarvis ask do you want an alarm to wake you up.if yes then enter alarm time and sleep
 # change the jarvis to a catchy name
-#undo in email sent
+#undo in email sent 
+#whatsup
