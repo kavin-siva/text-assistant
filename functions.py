@@ -220,9 +220,14 @@ def wishMe():
 
 
 def speak_wikipedia(client):
-    client = client.split(' ')
-    client = " ".join(client[2:])
-    wikipedia_input = str(wikipedia.summary(client, sentences=3))
+    client = client.lower()
+    #client = client.split(' ')
+    #client = " ".join(client[2:])
+    if 'who' in client:
+        client = client.replace('who is', '')
+    elif 'what' in client:
+        client = client.replace('what is', '')
+    wikipedia_input = str(wikipedia.summary(client, sentences=2))
     speak('According to wikipedia ')
     speak(wikipedia_input)
     speak_anythingelse()
@@ -314,7 +319,12 @@ def speak_location():
 
 
 def speak_time():
-    speak(str(ctime()))
+    speak(time.localtime().tm_wday + 1)
+    speak(time.localtime().tm_mon)
+    speak(time.localtime().tm_mday)
+    speak(time.localtime().tm_hour)
+    speak(time.localtime().tm_min)
+    speak(time.localtime().tm_year)
     speak_anythingelse()
 
 
@@ -424,10 +434,12 @@ def convert_alarm_time(given_alarm_time):
 def speak_anythingelse():
     speak("Is there anything else you want me to do. ")
     answer = input()
-    if "n" in answer:
+    if "n" == answer[0]:
         speak("You can ask me anything later. ")
         exit()
-    elif "yes" in answer:
+        return 0
+
+    elif "y" == answer[0]:
         speak("What can I do for you. ")
         _respond(input())
     else:
