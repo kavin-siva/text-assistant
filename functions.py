@@ -242,7 +242,7 @@ def speak_list():
         with open('shopping_list.txt', 'a+') as file1:
             while True:
                 print(file1.read())
-    speak("what do you want to add in your list ")
+    speak("What item do you want to add in your list? ")
     while True:
         pass
 
