@@ -1,4 +1,5 @@
 from time import ctime
+import os.path
 import pyttsx3
 import wikipedia
 import smtplib
@@ -238,33 +239,57 @@ def speak_wikipedia(client):
 
 
 def speak_list():
-    if os._exists("shopping_list.txt"):
-        with open('shopping_list.txt', 'a+') as file1:
+    if os.path.isfile("shopping_list.txt"):
+        print('These were the items that was present in your list...\n')
+        with open('shopping_list.txt', 'r') as file1:
             while True:
                 print(file1.read())
-    speak("What item do you want to add in your list? ")
-    while True:
-        pass
+                if file1.read() == "":
+                    break
+            print('Do you want to edit your list? ')
+            yes_no = input()
+            if 'y' in yes_no.lower():
+                change_list()
+            else:
+                speak_anythingelse()
 
-    # def takeCommand():
-    #     # It takes microphone input from the user and returns string output
+    else:
+        print('New shopping list has been made')
+        print("What item do you want to add in your list? ")
+        change_list()
+        speak_anythingelse()
 
-    #     r = sr.Recognizer()
-    #     with sr.Microphone() as source:
 
-    #         r.pause_threshold = 1
-    #         audio = r.listen(source)
+def change_list():
+    with open("shopping_list.txt", 'a') as file1:
+        print('What do you want to do with your list ')
+        while True:
+            user_input = input()
+            user_input = user_input.lower()
+            if user_input[0:3] == 'add' or user_input[0:3] == 'put':
+                file1.write(user_input.replace(user_input[0:3], '\n'))
+                print(f'{user_input.replace(user_input[0:3], '')} has been added to the list')
+            elif user_input[0:6] == 'remove' or user_input[0:6] == 'delete':
 
-    #     try:
+                # def takeCommand():
+                #     # It takes microphone input from the user and returns string output
 
-    #         query = r.recognize_google(audio, language='en')
-    #         print(f"User said: {query}\n")
+                #     r = sr.Recognizer()
+                #     with sr.Microphone() as source:
 
-    #     except Exception as e:
-    #         # print(e)
+                #         r.pause_threshold = 1
+                #         audio = r.listen(source)
 
-    #         return "None"
-    #     return query
+                #     try:
+
+                #         query = r.recognize_google(audio, language='en')
+                #         print(f"User said: {query}\n")
+
+                #     except Exception as e:
+                #         # print(e)
+
+                #         return "None"
+                #     return query
 
 
 def speak_mail():

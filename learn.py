@@ -1,3 +1,1 @@
-import os
-
-print(os._exists("shopping_list.txt"))
+with open('shopping_list.txt', 'r+') as file1:
