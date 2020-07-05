@@ -239,28 +239,32 @@ def speak_wikipedia(client):
 
 def speak_list():
     if os._exists("shopping_list.txt"):
+        with open('shopping_list.txt', 'a+') as file1:
+            while True:
+                print(file1.read())
     speak("what do you want to add in your list ")
     while True:
+        pass
 
-        # def takeCommand():
-        #     # It takes microphone input from the user and returns string output
+    # def takeCommand():
+    #     # It takes microphone input from the user and returns string output
 
-        #     r = sr.Recognizer()
-        #     with sr.Microphone() as source:
+    #     r = sr.Recognizer()
+    #     with sr.Microphone() as source:
 
-        #         r.pause_threshold = 1
-        #         audio = r.listen(source)
+    #         r.pause_threshold = 1
+    #         audio = r.listen(source)
 
-        #     try:
+    #     try:
 
-        #         query = r.recognize_google(audio, language='en')
-        #         print(f"User said: {query}\n")
+    #         query = r.recognize_google(audio, language='en')
+    #         print(f"User said: {query}\n")
 
-        #     except Exception as e:
-        #         # print(e)
+    #     except Exception as e:
+    #         # print(e)
 
-        #         return "None"
-        #     return query
+    #         return "None"
+    #     return query
 
 
 def speak_mail():

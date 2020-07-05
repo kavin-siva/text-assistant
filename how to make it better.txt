@@ -6,3 +6,6 @@
 #undo in email sent 
 #whatsup
 #wiki, 'n'elson mandela after 'is there anything else i can help u with'
+#make an app
+#make a website
+#stop function
