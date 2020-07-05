@@ -246,12 +246,12 @@ def speak_list():
                 print(file1.read())
                 if file1.read() == "":
                     break
+            print('\n')
             print('Do you want to edit your list? ')
             yes_no = input()
             if 'y' in yes_no.lower():
                 change_list()
-            else:
-                speak_anythingelse()
+            speak_anythingelse()
 
     else:
         print('New shopping list has been made')
@@ -262,18 +262,39 @@ def speak_list():
 
 def change_list():
     with open("shopping_list.txt", 'a') as file1:
-        print('What do you want to do with your list ')
+        print('What do you want to do with the list ')
         while True:
+            print('What do you want to do with your the list ')
             user_input = input()
             user_input = user_input.lower()
             if user_input[0:3] == 'add' or user_input[0:3] == 'put':
-                file1.write(user_input.replace(user_input[0:3], '\n'))
+                user_input = user_input.replace(user_input[0:3], '')
+                user_input = user_input.strip()
+                user_input = '\n' + user_input
+                file1.write(user_input)
+                user_input = user_input.replace("\n", "")
                 print(
-                    f'{user_input.replace(user_input[0:3], "")} has been added to the list')
+                    f'{user_input} has been added to the list')
+                print('Do you want to make anymore changes in the list ')
+                if 'y' not in input():
+                    return 0
+
             elif user_input[0:6] == 'remove' or user_input[0:6] == 'delete':
                 with open("shopping_list.txt", 'r+') as file2:
                     data = file2.readlines()
                     a = user_input.replace(user_input[0:6], '')
+                    a = a.strip()
+                    if a != len(data)-1:
+                        a += '\n'
+                    data.remove(a)
+                    a = a.replace('\n', '')
+                    print(f"{a} has been removed from the list ")
+                    with open("shopping_list.txt", "w") as f:
+                        pass
+                    file2.writelines(data)
+                    print('Do you want to make anymore changes in the list ')
+                    if 'n' in input():
+                        return 0
 
                 # def takeCommand():
                 #     # It takes microphone input from the user and returns string output
@@ -497,9 +518,9 @@ def speak_anythingelse():
 
     elif "y" == answer[0]:
         speak("What can I do for you. ")
-        _respond(input())
+        return 0
     else:
-        _respond(answer)
+        return 0
 
 
 def speak_calculator():

@@ -1,6 +1,4 @@
-airplane
 $1000 apple stand
-$700 apple wheels 
-pillow 
-another pillow 
+$700 apple wheels
 nintendo switch
+xbox
