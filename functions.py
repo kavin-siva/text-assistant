@@ -268,8 +268,12 @@ def change_list():
             user_input = user_input.lower()
             if user_input[0:3] == 'add' or user_input[0:3] == 'put':
                 file1.write(user_input.replace(user_input[0:3], '\n'))
-                print(f'{user_input.replace(user_input[0:3], '')} has been added to the list')
+                print(
+                    f'{user_input.replace(user_input[0:3], "")} has been added to the list')
             elif user_input[0:6] == 'remove' or user_input[0:6] == 'delete':
+                with open("shopping_list.txt", 'r+') as file2:
+                    data = file2.readlines()
+                    a = user_input.replace(user_input[0:6], '')
 
                 # def takeCommand():
                 #     # It takes microphone input from the user and returns string output
