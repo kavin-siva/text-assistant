@@ -240,7 +240,7 @@ def speak_wikipedia(client):
 
 def speak_list():
     if os.path.isfile("shopping_list.txt"):
-        print('These were the items that was present in your list...\n')
+        print('These were the items that was present in your list...')
         with open('shopping_list.txt', 'r') as file1:
             while True:
                 print(file1.read())
@@ -263,9 +263,13 @@ def speak_list():
 def change_list():
     with open("shopping_list.txt", 'a') as file1:
         print('What do you want to do with the list ')
+        n = 1
         while True:
-            print('What do you want to do with your the list ')
+            if n == 0:
+                print('What do you want to do with the list ')
+                n = 1
             user_input = input()
+            n = 0
             user_input = user_input.lower()
             if user_input[0:3] == 'add' or user_input[0:3] == 'put':
                 user_input = user_input.replace(user_input[0:3], '')
@@ -282,15 +286,21 @@ def change_list():
             elif user_input[0:6] == 'remove' or user_input[0:6] == 'delete':
                 with open("shopping_list.txt", 'r+') as file2:
                     data = file2.readlines()
+                    print(data)
                     a = user_input.replace(user_input[0:6], '')
                     a = a.strip()
-                    if a != len(data)-1:
+                    if a != data[len(data)-1]:
                         a += '\n'
+                    if '\n' in data[len(data)-1]:
+                        data[len(data)-1] = data[len(data)-1].replace('\n', '')
                     data.remove(a)
+                    if '\n' in data[len(data)-1]:
+                        data[len(data)-1] = data[len(data)-1].replace('\n', '')
                     a = a.replace('\n', '')
                     print(f"{a} has been removed from the list ")
                     with open("shopping_list.txt", "w") as f:
                         pass
+                    data[0] = ''
                     file2.writelines(data)
                     print('Do you want to make anymore changes in the list ')
                     if 'n' in input():
