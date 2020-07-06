@@ -1,7 +1,9 @@
 
-list1 = ['airplane\n', '$1000 apple stand\n', '$700 apple wheels \n',
-         'pillow \n', 'another pillow \n', 'nintendo switch']
-a = ' $1000 apple stand'
-a += '\n\n'
-print(list1.remove('airplane\n'))
-print(list1)
+def remove_spaces(word):
+    margin = 38
+    no_of_spaces = 38 + len(word)
+    with open("some_list.txt", "w") as f:
+        f.writelines('\x00')
+
+
+remove_spaces('pc')

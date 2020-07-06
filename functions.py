@@ -327,8 +327,8 @@ def change_list():
 def remove_spaces(word):
     margin = 38
     no_of_spaces = 38 + len(word)
-    with open
-    print(data)
+    with open("some_list.txt", "w") as f:
+        pass
 
     # def takeCommand():
     #     # It takes microphone input from the user and returns string output
