@@ -240,23 +240,31 @@ def speak_wikipedia(client):
 
 def speak_list():
     if os.path.isfile("shopping_list.txt"):
-        print('These were the items that was present in your list...')
+        speak('These were the items that was present in your list...')
         with open('shopping_list.txt', 'r') as file1:
             while True:
-                print(file1.read())
+                speak(file1.read())
                 if file1.read() == "":
                     break
-            print('\n')
-            print('Do you want to edit your list? ')
+            speak('\n')
+            speak('Do you want to edit your list? ')
             yes_no = input()
             if 'y' in yes_no.lower():
                 change_list()
+                while True:
+                    print(file1.read())
+                    if file1.read() == "":
+                        break
             speak_anythingelse()
 
     else:
-        print('New shopping list has been made')
-        print("What item do you want to add in your list? ")
+        speak('New shopping list has been made')
+        speak("What item do you want to add in your list? ")
         change_list()
+        while True:
+            print(file1.read())
+            if file1.read() == "":
+                break
         speak_anythingelse()
 
 
@@ -266,7 +274,7 @@ def change_list():
         n = 1
         while True:
             if n == 0:
-                print('What do you want to do with the list ')
+                speak('What do you want to do with the list ')
                 n = 1
             user_input = input()
             n = 0
@@ -277,9 +285,9 @@ def change_list():
                 user_input = '\n' + user_input
                 file1.write(user_input)
                 user_input = user_input.replace("\n", "")
-                print(
+                speak(
                     f'{user_input} has been added to the list')
-                print('Do you want to make anymore changes in the list ')
+                speak('Do you want to make anymore changes to the list ')
                 if 'y' not in input():
                     return 0
 
@@ -287,45 +295,60 @@ def change_list():
                 with open("shopping_list.txt", 'r+') as file2:
                     data = file2.readlines()
                     print(data)
-                    print(data)
                     a = user_input.replace(user_input[0:6], '')
                     a = a.strip()
                     if a != data[len(data)-1]:
                         a += '\n'
                     if '\n' in data[len(data)-1]:
                         data[len(data)-1] = data[len(data)-1].replace('\n', '')
+                    print(data)
                     data.remove(a)
+                    print(data)
                     if '\n' in data[len(data)-1]:
                         data[len(data)-1] = data[len(data)-1].replace('\n', '')
+                    print(data)
                     a = a.replace('\n', '')
-                    print(f"{a} has been removed from the list ")
+                    speak(f"{a} has been removed from the list ")
                     with open("shopping_list.txt", "w") as f:
+                        print(data)
                         f.write('\n')
+                        print(data)
                         data.pop(0)
+                        print(data)
                         file2.writelines(data)
-                    print('Do you want to make anymore changes in the list ')
+                        print(data)
+                    speak('Do you want to make anymore changes to the list ')
+                    print(data)
                     if 'n' in input():
                         return 0
+    print(data)
 
-                # def takeCommand():
-                #     # It takes microphone input from the user and returns string output
 
-                #     r = sr.Recognizer()
-                #     with sr.Microphone() as source:
+def remove_spaces(word):
+    margin = 38
+    no_of_spaces = 38 + len(word)
+    with open
+    print(data)
 
-                #         r.pause_threshold = 1
-                #         audio = r.listen(source)
+    # def takeCommand():
+    #     # It takes microphone input from the user and returns string output
 
-                #     try:
+    #     r = sr.Recognizer()
+    #     with sr.Microphone() as source:
 
-                #         query = r.recognize_google(audio, language='en')
-                #         print(f"User said: {query}\n")
+    #         r.pause_threshold = 1
+    #         audio = r.listen(source)
 
-                #     except Exception as e:
-                #         # print(e)
+    #     try:
 
-                #         return "None"
-                #     return query
+    #         query = r.recognize_google(audio, language='en')
+    #         print(f"User said: {query}\n")
+
+    #     except Exception as e:
+    #         # print(e)
+
+    #         return "None"
+    #     return query
 
 
 def speak_mail():
