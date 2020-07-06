@@ -287,6 +287,7 @@ def change_list():
                 with open("shopping_list.txt", 'r+') as file2:
                     data = file2.readlines()
                     print(data)
+                    print(data)
                     a = user_input.replace(user_input[0:6], '')
                     a = a.strip()
                     if a != data[len(data)-1]:
@@ -299,9 +300,9 @@ def change_list():
                     a = a.replace('\n', '')
                     print(f"{a} has been removed from the list ")
                     with open("shopping_list.txt", "w") as f:
-                        pass
-                    data[0] = ''
-                    file2.writelines(data)
+                        f.write('\n')
+                        data.pop(0)
+                        file2.writelines(data)
                     print('Do you want to make anymore changes in the list ')
                     if 'n' in input():
                         return 0
