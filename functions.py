@@ -13,6 +13,7 @@ import os
 import random
 from gtts import gTTS
 import subprocess
+import pyautogui
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -246,31 +247,38 @@ def speak_list():
                 speak(file1.read())
                 if file1.read() == "":
                     break
-            speak('\n')
+           # print('\n')
             speak('Do you want to edit your list? ')
             yes_no = input()
             if 'y' in yes_no.lower():
                 change_list()
-                while True:
-                    print(file1.read())
-                    if file1.read() == "":
-                        break
+                if os.path.exists('shopping_list.txt'):
+                    remove_those_idiot_question_mark()
             speak_anythingelse()
 
     else:
         speak('New shopping list has been made')
         speak("What item do you want to add in your list? ")
         change_list()
-        while True:
-            print(file1.read())
-            if file1.read() == "":
-                break
+        if os.path.exists('shopping_list.txt'):
+            remove_those_idiot_question_mark()
         speak_anythingelse()
+
+
+def remove_those_idiot_question_mark():
+    os.startfile('shopping_list.txt')
+    time.sleep(0.5)
+    pyautogui.press('down')
+    for i in range(0, 125):
+        pyautogui.press('backspace')
+    pyautogui.press('enter')
+    pyautogui.hotkey('ctrl', 's')
+    pyautogui.hotkey('ctrl', 'w')
 
 
 def change_list():
     with open("shopping_list.txt", 'a') as file1:
-        print('What do you want to do with the list ')
+        speak('What do you want to do with the list ')
         n = 1
         while True:
             if n == 0:
@@ -294,41 +302,36 @@ def change_list():
             elif user_input[0:6] == 'remove' or user_input[0:6] == 'delete':
                 with open("shopping_list.txt", 'r+') as file2:
                     data = file2.readlines()
-                    print(data)
+
                     a = user_input.replace(user_input[0:6], '')
                     a = a.strip()
                     if a != data[len(data)-1]:
                         a += '\n'
                     if '\n' in data[len(data)-1]:
                         data[len(data)-1] = data[len(data)-1].replace('\n', '')
-                    print(data)
+
                     data.remove(a)
-                    print(data)
+
                     if '\n' in data[len(data)-1]:
                         data[len(data)-1] = data[len(data)-1].replace('\n', '')
-                    print(data)
+
                     a = a.replace('\n', '')
                     speak(f"{a} has been removed from the list ")
                     with open("shopping_list.txt", "w") as f:
-                        print(data)
-                        f.write('\n')
-                        print(data)
-                        data.pop(0)
-                        print(data)
+
                         file2.writelines(data)
-                        print(data)
+
                     speak('Do you want to make anymore changes to the list ')
-                    print(data)
+
                     if 'n' in input():
                         return 0
-    print(data)
-
-
-def remove_spaces(word):
-    margin = 38
-    no_of_spaces = 38 + len(word)
-    with open("some_list.txt", "w") as f:
-        pass
+            elif 'clear' in user_input:
+              #  os.remove('shopping_list.txt')
+                remove = True
+                speak('Your shopping list has been cleared')
+                break
+    if remove:
+        os.remove('shopping_list.txt')
 
     # def takeCommand():
     #     # It takes microphone input from the user and returns string output
