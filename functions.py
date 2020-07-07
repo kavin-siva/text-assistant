@@ -17,8 +17,8 @@ import pyautogui
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-# print(voices[1].id)
-engine.setProperty('voice', voices[0].id)
+# print(voices[2].id)
+engine.setProperty('voice', voices[2].id)
 
 
 def speak(audio):
@@ -36,7 +36,15 @@ def _respond(client):
     if "name" in client:
         speak_name()
 
-    if "weight" in client and "con" in client:
+    elif 'n' == client[0] and ('o' == client[1] or 'a' == client[1]):
+        speak('You can ask me anything later')
+        exit()
+
+    elif 'y' == client[0] and ('e' == client[1] or 'a' == client[1]):
+        speak('What do you want me to do ')
+        return 0
+
+    elif "weight" in client and "con" in client:
         speak_weight_converter()
 
     elif "stopwatch" in client:
@@ -143,7 +151,10 @@ def _respond(client):
 
     elif "thankyou" in client:
         speak_thankyou()
-    elif "" in client:
+    elif:
+        client = did_you_mean(client)
+        _respond(client)
+    else:
         try:
             speak_wikipedia(extra_client)
 
@@ -151,10 +162,6 @@ def _respond(client):
 
             client = did_you_mean(client)
             _respond(client)
-
-    else:
-        client = did_you_mean(client)
-        _respond(client)
 
 
 functions_string = {
@@ -427,6 +434,7 @@ def speak_time():
     mon = list2[time.localtime().tm_mon - 1]
     mday = time.localtime().tm_mday
     hour = time.localtime().tm_hour
+    year = time.localtime().tm_year
     minu = time.localtime().tm_min
     if hour > 12:
         hour -= 12
@@ -435,9 +443,17 @@ def speak_time():
         minu = f"{minu} PM"
     else:
         minu = f"{minu} AM"
+    try:
+        if int(minu.replace('AM', '')) < 10:
+            string = f"{wday} {mon} {mday}, {hour}:0{minu} {year}"
+        else:
+            string = f"{wday} {mon} {mday}, {hour}:{minu} {year}"
+    except:
+        if int(minu.replace('PM', '')) < 10:
+            string = f"{wday} {mon} {mday}, {hour}:0{minu} {year}"
+        else:
+            string = f"{wday} {mon} {mday}, {hour}:{minu} {year}"
 
-    year = time.localtime().tm_year
-    string = f"{wday} {mon} {mday} {hour}:{minu} {year}"
     speak(string)
     speak_anythingelse()
 
@@ -547,17 +563,18 @@ def convert_alarm_time(given_alarm_time):
 
 def speak_anythingelse():
     speak("Is there anything else you want me to do. ")
-    answer = input()
-    if "n" == answer[0]:
-        speak("You can ask me anything later. ")
-        exit()
-        return 0
+    # answer = input()
+    # if "n" == answer[0]:
+    #     speak("You can ask me anything later. ")
+    #     exit()
+    #     return 0
 
-    elif "y" == answer[0]:
-        speak("What can I do for you. ")
-        return 0
-    else:
-        return 0
+    # elif "y" == answer[0]:
+    #     speak("What can I do for you. ")
+    #     return 0
+    # else:
+    #     respond(client)
+    return 0
 
 
 def speak_calculator():

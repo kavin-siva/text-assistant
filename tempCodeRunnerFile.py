@@ -1,1 +1,1 @@
-speak('According to wikipedia ')
+1
