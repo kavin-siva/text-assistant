@@ -1,1 +1,1 @@
-1
+(input_list[i])[j]
