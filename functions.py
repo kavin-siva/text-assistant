@@ -151,15 +151,14 @@ def _respond(client):
 
     elif "thankyou" in client:
         speak_thankyou()
-    else:
+    elif True:
         try:
             speak_wikipedia(extra_client)
 
         except:
+            client = did_you_mean(client)
+            _respond(client)
     else:
-        client = did_you_mean(client)
-        _respond(client)
-
         client = did_you_mean(client)
         _respond(client)
 
