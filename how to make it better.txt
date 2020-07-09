@@ -12,3 +12,11 @@
 #in is there anything else you want me to do, if time or other command no response.
 #joke
 #did you mean function
+#in game function/Traceback (most recent call last):
+  File "c:\Users\shiwa\Documents\GitHub\Ai\text assistant.py", line 27, in <module>
+    fn._respond(client)
+  File "c:\Users\shiwa\Documents\GitHub\Ai\functions.py", line 147, in _respond
+    speak_games()
+  File "c:\Users\shiwa\Documents\GitHub\Ai\functions.py", line 633, in speak_games
+    guess = int(input("\nGuess a number between 1 and 50: "))
+ValueError: invalid literal for int() with base 10: ''

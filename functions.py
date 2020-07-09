@@ -56,7 +56,7 @@ def _respond(client):
     elif "dictionary" in client:
         speak_dictionary()
 
-    elif "cubetimer" in client:
+    elif "cubetimer" in client or 'ctimer' in client:
         speak_cubetimer()
 
     elif "time" in client:
@@ -625,11 +625,11 @@ def speak_games():
 
         while guess != number:
             if guess < number:
-                print("You need to guess higher, Try again ")
+                speak("You need to guess higher, Try again ")
                 guess = int(input("\nGuess a number between 1 and 50: "))
 
             if guess < number:
-                print("You need to guess lower, Try again: ")
+                speak("You need to guess lower, Try again: ")
                 guess = int(input("\nGuess a number between 1 and 50: "))
 
             else:
@@ -651,6 +651,7 @@ def speak_chess():
     url = "www.chess.com"
     webbrowser.get().open(url)
     speak("I hope you win your chess match ")
+    speak_anythingelse()
 
 
 def speak_compliment():
