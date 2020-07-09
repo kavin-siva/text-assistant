@@ -416,6 +416,29 @@ def speak_weight_converter():
     speak_anythingelse()
 
 
+def speak_joke():
+    joke = random.randint(1, 6)
+    if joke == 1:
+        speak("What did the shark say when it ate the clownfish? ")
+        speak('That tasted a little funny ')
+    if joke == 2:
+        speak("How do you make a tissue dance? ")
+        speak('Put a little boogie in it')
+    if joke == 3:
+        speak("Student: Teacher would you punish me for something I didn't do? ")
+        speak("Teacher: No")
+        speak("Student: I didn't do my homework ")
+    # if joke == 4:
+      #  speak("It rolled on number four. ")
+    # if joke == 5:
+      #  speak("It rolled on number five. ")
+   # if joke == 6:
+      #  speak("It rolled on number six. ")
+        speak_anythingelse()
+
+    speak_anythingelse()
+
+
 def alarm():
     subprocess.call(["dist/alarm/alarm.exe"])
 
