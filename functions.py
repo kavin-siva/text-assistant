@@ -56,7 +56,7 @@ def _respond(client):
     elif "dictionary" in client:
         speak_dictionary()
 
-    elif "cubetimer" in client or 'ctimer' in client:
+    elif "cubetimer" in client or 'cstimer' in client:
         speak_cubetimer()
 
     elif "time" in client:
@@ -70,6 +70,9 @@ def _respond(client):
 
     elif "compliment" in client:
         speak_compliment()
+
+    elif "joke" in client:
+        speak_joke()
 
     elif "mood" in client and "good" in client and "no" in client:
         speak_mood()
@@ -170,6 +173,7 @@ functions_string = {
     "name_function": "name",
     "time_function": "time",
     "mail_function": "mail",
+    "joke_function": "joke",
     "weather_function": "weather",
     "calculator_function": "calculator",
     "compliment_function": "compliment",
@@ -228,7 +232,7 @@ def wishMe():
     else:
         speak("Good Evening!")
 
-    speak("Hi Kavin, how can I help you")
+    speak("How can I help you")
 
 
 def speak_wikipedia(client):

@@ -1,4 +1,20 @@
-.w-full max-w-xs {
-  margin-left: 40%;
+form {
+  padding: auto;
+}
+body {
+  background-color: #eb1157;
+}
+#container1 {
+  margin-left: 41%;
   margin-top: 15%;
+}
+
+#terms_of_service {
+  text-decoration: blue;
+  text-decoration: underline;
+}
+
+#icon {
+  margin-left: 10%;
+  margin-top: ;
 }
