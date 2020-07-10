@@ -728,7 +728,10 @@ def speak_greetings():
 def speak_goodnight():
     speak("Good Night to you as well")
     speak("Sleep tite and do not let the bed bugs bite. ")
+    speak('The time is ')
     speak(ctime())
+    speak('Would you like a alarm? ')
+    speak_anythingelse()
     # add alarm after 8 hours with clients permission
 
 

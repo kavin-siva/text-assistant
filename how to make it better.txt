@@ -1,16 +1,15 @@
 # improve reminder
-# shopping list, whenever called shopping list show or tell, when clear delete.
+# improve shopping list, clear...
 # organize the code like cubing, etc.
 # when good night then make jarvis ask do you want an alarm to wake you up.if yes then enter alarm time and sleep
 # change the jarvis to a catchy name
 #undo in email sent 
 #whatsup
-#wiki, 'n'elson mandela after 'is there anything else i can help u with'
 #make an app
 #make a website
 #stop function
-#in is there anything else you want me to do, if time or other command no response.
-#joke function/
+#joke function 1/2 done
 #did you mean function
+ctime in laarm/ time fct needed
 
 
