@@ -15,13 +15,12 @@ from gtts import gTTS
 import subprocess
 import pyautogui
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-# print(voices[2].id)
-engine.setProperty('voice', voices[2].id)
-
 
 def speak(audio):
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+    # print(voices[2].id)
+    engine.setProperty('voice', voices[2].id)
     print(audio)
     engine.say(audio)
     engine.runAndWait()
@@ -212,14 +211,15 @@ r = sr.Recognizer()
 dictionary = PyDictionary()
 
 
-# def jarvis_speak(audio_string):
-#     tts = gTTS(text=audio_string, lang="en")
-#     r = random.randint(1, 10000000)
-#     audio_file = "audio-" + str(r) + ".mp3"
-#     tts.save(audio_file)
-#     playsound.playsound(audio_file)
-#     print(audio_string)
-#     os.remove(audio_file)
+def male_speak(audio_string):
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+  # print(voices[2].id)
+    engine.setProperty('voice', voices[0].id)
+    print(audio_string)
+    engine.say(audio_string)
+    engine.runAndWait()
+
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -417,7 +417,8 @@ def speak_weight_converter():
 
 
 def speak_joke():
-    joke = random.randint(1, 6)
+    joke = 3
+    # joke = random.randint(1,6)
     if joke == 1:
         speak("What did the shark say when it ate the clownfish? ")
         speak('That tasted a little funny ')
@@ -426,15 +427,14 @@ def speak_joke():
         speak('Put a little boogie in it')
     if joke == 3:
         speak("Student: Teacher would you punish me for something I didn't do? ")
-        speak("Teacher: No")
+        male_speak("Teacher: No")
         speak("Student: I didn't do my homework ")
-    # if joke == 4:
-      #  speak("It rolled on number four. ")
-    # if joke == 5:
-      #  speak("It rolled on number five. ")
-   # if joke == 6:
-      #  speak("It rolled on number six. ")
-        speak_anythingelse()
+    if joke == 4:
+        speak("It rolled on number four. ")
+    if joke == 5:
+        speak("It rolled on number five. ")
+    if joke == 6:
+        speak("It rolled on number six. ")
 
     speak_anythingelse()
 
@@ -645,7 +645,8 @@ def speak_weather():
 
 def speak_games():
     speak("What game do you want to play")
-    input1 = input("A game on the web or guess the number.")
+    speak("A game on the web or guess the number.")
+    input1 = input()
     if "number" in input1:
         number = random.randrange(1, 50)
         guess = int(input("Guess a number between 1 and 50: "))

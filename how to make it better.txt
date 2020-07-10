@@ -1,4 +1,4 @@
-# add a reminder
+# improve reminder
 # shopping list, whenever called shopping list show or tell, when clear delete.
 # organize the code like cubing, etc.
 # when good night then make jarvis ask do you want an alarm to wake you up.if yes then enter alarm time and sleep
@@ -10,15 +10,7 @@
 #make a website
 #stop function
 #in is there anything else you want me to do, if time or other command no response.
-#joke function/glitch
+#joke function/
 #did you mean function
-after some tries in guess no.
-#in game function/Traceback (most recent call last):
-  File "c:\Users\shiwa\Documents\GitHub\Ai\text assistant.py", line 27, in <module>
-    fn._respond(client)
-  File "c:\Users\shiwa\Documents\GitHub\Ai\functions.py", line 147, in _respond
-    speak_games()
-  File "c:\Users\shiwa\Documents\GitHub\Ai\functions.py", line 633, in speak_games
-    guess = int(input("\nGuess a number between 1 and 50: "))
-ValueError: invalid literal for int() with base 10: ''
-wikipedia function taking way too long...
+
+
