@@ -10,8 +10,9 @@
 #make a website
 #stop function
 #in is there anything else you want me to do, if time or other command no response.
-#joke
+#joke function/glitch
 #did you mean function
+after some tries in guess no.
 #in game function/Traceback (most recent call last):
   File "c:\Users\shiwa\Documents\GitHub\Ai\text assistant.py", line 27, in <module>
     fn._respond(client)

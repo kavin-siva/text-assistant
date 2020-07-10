@@ -71,7 +71,7 @@ def _respond(client):
     elif "compliment" in client:
         speak_compliment()
 
-    elif "joke" in client:
+    elif "joke" in client or "tell me a joke" in client or "tell me another joke" in client:
         speak_joke()
 
     elif "mood" in client and "good" in client and "no" in client:
