@@ -61,6 +61,7 @@ def did_you_mean(input_string):
                 if "y" in new_input:
                     n = 0
                     print('Match has been found ')
+                    exit()
                 elif 'n' in new_input:
                     tries += 1
                 if tries >= 2:
@@ -82,7 +83,6 @@ def remove_more_less(input_list, input_string):
             extra_list.append(input_list[i])
     for i in range(0, len(extra_list)):
         input_list.remove(extra_list[i])
-    input_list.pop()
     return input_list
 
 
